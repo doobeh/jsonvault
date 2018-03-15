@@ -1,14 +1,14 @@
 from . import api
-from flask import request, abort, jsonify, json, make_response, current_app
+from flask import request, abort, jsonify, json, current_app
 from jsonvault.model import Project, Vault, Token
 from jsonvault.database import db
 
 
-@api.route('/<int:project>/store/', methods=['POST'])
+@api.route('/<project>/store/', methods=['POST'])
 def store(project):
     if request.is_json:
         data = request.get_json()
-        p = Project.query.filter_by(id=project).first()
+        p = Project.query.filter_by(name=project).first()
         user_token = data.get('token')
         if not user_token:
             abort(401)
@@ -23,9 +23,9 @@ def store(project):
         abort(400)
 
 
-@api.route('/<int:project>/')
+@api.route('/<project>/')
 def view(project):
-    p = Project.query.filter_by(id=project).first()
+    p = Project.query.filter_by(name=project).first()
     if not p:
         return abort(404)
 

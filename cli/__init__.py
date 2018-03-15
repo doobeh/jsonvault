@@ -3,11 +3,25 @@ from flask_sqlalchemy import SQLAlchemy
 from flask.cli import AppGroup, FlaskGroup
 from jsonvault.model import Token, Vault, Project
 from jsonvault.database import db
+from flask import current_app
+import os
 
 
 project_cli = AppGroup('project')
 token_cli = AppGroup('token')
 db_cli = AppGroup('db')
+core_cli = AppGroup('core')
+
+
+@core_cli.command('init')
+def app_init():
+    # create instance directory if it doesn't already exist:
+    if not os.path.exists(current_app.instance_path):
+        os.makedirs(current_app.instance_path)
+        print("[x] Created instance folder")
+    db.create_all()
+    print("[x] Created database")
+    print('App is ready to launch. Run `flask run` to start a production server.')
 
 
 @db_cli.command('init')
@@ -33,11 +47,12 @@ def project_add_command(name):
 
 
 @token_cli.command('create')
-@click.argument('projectid', type=int)
-def token_add_command(projectid):
-    p = Project.query.filter_by(id=projectid).first()
+@click.argument('project')
+def token_add_command(project):
+    p = Project.query.filter_by(name=project).first()
     if p:
         t = Token(p)
+        print('Project: {}'.format(p.name))
         print('Token Added: {}'.format(t.token))
         db.session.add(t)
         db.session.commit()

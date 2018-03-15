@@ -12,8 +12,9 @@ from flask import Flask, request
 from flask.cli import AppGroup
 from .database import db
 from .model import Token, Project, Vault
-from cli import project_cli, token_cli, db_cli
+from cli import project_cli, token_cli, db_cli, core_cli
 from jsonvault.api import api
+
 
 def create_app(config=None):
     app = Flask('jsonvault')
@@ -39,4 +40,6 @@ def register_cli(app):
     app.cli.add_command(project_cli)
     app.cli.add_command(token_cli)
     app.cli.add_command(db_cli)
+    app.cli.add_command(core_cli)
+
 
