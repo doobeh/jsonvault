@@ -1,7 +1,6 @@
 import click
-from flask_sqlalchemy import SQLAlchemy
-from flask.cli import AppGroup, FlaskGroup
-from jsonvault.model import Token, Vault, Project
+from flask.cli import AppGroup
+from jsonvault.model import Token, Project
 from jsonvault.database import db
 from flask import current_app
 import os

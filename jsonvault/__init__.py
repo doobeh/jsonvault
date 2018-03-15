@@ -7,9 +7,7 @@
 """
 
 import os
-import click
-from flask import Flask, request
-from flask.cli import AppGroup
+from flask import Flask
 from .database import db
 from .model import Token, Project, Vault
 from cli import project_cli, token_cli, db_cli, core_cli
