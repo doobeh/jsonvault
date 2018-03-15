@@ -30,7 +30,7 @@ def view(project):
         return abort(404)
 
     response = current_app.response_class(
-        response="[{}]".format(",".join([x.data for x in p.vaults])),
+        response="[{}]".format(",\n".join([x.data for x in p.vaults])),
         status=200,
         mimetype='application/json'
     )
