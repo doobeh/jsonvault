@@ -44,7 +44,7 @@ def tail(project, limit):
         return abort(404)
 
     response = current_app.response_class(
-        response="[\n{}\n]".format(",\n".join([x.data for x in p.vaults[:limit]])),
+        response="[\n{}\n]".format(",\n".join([x.data for x in p.vaults[limit*-1:]])),
         status=200,
         mimetype='application/json'
     )
