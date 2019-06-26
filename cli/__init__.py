@@ -1,6 +1,6 @@
 import click
 from flask.cli import AppGroup
-from jsonvault.model import Token, Project
+from jsonvault.model import Token, Project, Vault
 from jsonvault.database import db
 from flask import current_app
 import os
@@ -43,6 +43,13 @@ def project_add_command(name):
     project = Project(name)
     db.session.add(project)
     db.session.commit()
+
+
+@project_cli.command('wipe')
+@click.argument('name')
+def project_wipe_data(name):
+    project = Project.query.filter_by(name=name).first()
+    db.session.query(Vault).filter(Vault.project == project).delete()
 
 
 @token_cli.command('create')
