@@ -35,3 +35,17 @@ def view(project):
         mimetype='application/json'
     )
     return response
+
+
+@api.route('/<project>/tail/<int:limit>')
+def tail(project, limit):
+    p = Project.query.filter_by(name=project).first()
+    if not p:
+        return abort(404)
+
+    response = current_app.response_class(
+        response="[\n{}\n]".format(",\n".join([x.data for x in p.vaults[:limit]])),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
