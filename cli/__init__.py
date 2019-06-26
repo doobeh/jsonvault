@@ -50,6 +50,7 @@ def project_add_command(name):
 def project_wipe_data(name):
     project = Project.query.filter_by(name=name).first()
     db.session.query(Vault).filter(Vault.project == project).delete()
+    db.session.commit()
 
 
 @token_cli.command('create')
