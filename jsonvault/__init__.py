@@ -12,6 +12,7 @@ from .database import db
 from .model import Token, Project, Vault
 from cli import project_cli, token_cli, db_cli, core_cli
 from jsonvault.api import api
+from flask_cors import CORS
 
 
 def create_app(config=None):
@@ -30,6 +31,7 @@ def create_app(config=None):
     db.init_app(app)
     register_cli(app)
     app.register_blueprint(api)
+    CORS(app)
 
     return app
 

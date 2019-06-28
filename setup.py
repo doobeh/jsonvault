@@ -17,6 +17,7 @@ setup(
         'flask',
         'flask-sqlalchemy',
         'flask-gunicorn',
+        'flask-cors',
     ],
     setup_requires=[
         'pytest-runner',
